@@ -27,15 +27,17 @@
                 {{item.package.links.homepage}}
               </a>
             </div>
-            <v-btn 
+            <!-- <v-btn 
               color="black" 
               small
-              @click='log'
+              @click='pickItem'
             >
+
               <v-icon color="white">
                 mdi-arrow-expand
               </v-icon>
-            </v-btn>
+            </v-btn> -->
+            <Dialog :data="collectedData" />
           </v-card-text>
 
         </v-card>
@@ -45,19 +47,39 @@
 </template>
 
 <script>
+import { getCurrentItemStat } from "@/api";
+import Dialog from '@/components/Dialog';
 
 export default ({
-    props:{
-        item:{
-            type: Object,
-            required: true
-        }
-    },
+  components:{
+    Dialog
+  },
 
-    methods:{
-      log(){
-        console.log(this.item);
-      }
+  data() {
+    return {
+      collectedData:{}
     }
+  },
+
+  props:{
+      item:{
+          type: Object,
+          required: true
+      }
+  },
+
+  async created(){
+    let stat = await getCurrentItemStat(this.item.package.name)
+
+      this.collectedData  = {
+        author : this.item.package.author,
+        name : this.item.package.name,
+        description : this.item.package.description,
+        version : this.item.package.version,
+        rank : stat.rank,
+        total : stat.total,
+      }
+  }
+
 })
 </script>

@@ -4,24 +4,32 @@
       v-model="dialog"
       width="500"
     >
-      <!-- <template v-slot:activator="{ on, attrs }">
+      <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="red lighten-2"
-          dark
+          color="black"
           v-bind="attrs"
           v-on="on"
+          small
         >
-          Click Me
+          <v-icon color="white">
+            mdi-information-outline
+          </v-icon>
         </v-btn>
-      </template> -->
+      </template>
 
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Privacy Policy
+          {{ data.name }} <span class="pl-2"> {{ data.version }} </span>
         </v-card-title>
 
-        <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <v-card-text class="pt-2">
+          <div class=""> {{ data.description }} </div>
+          <div class="">
+            <div class="pa-4 text-center secondary text-no-wrap rounded-sm">
+               {{ data.rank }} 
+            </div>
+            <div class=""> {{ data.total }} </div>
+          </div>
         </v-card-text>
 
         <v-divider></v-divider>
@@ -29,11 +37,13 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="primary"
-            text
-            @click="dialog = !dialog"
+            color="black"
+            small
+            @click="dialog = false"
           >
-            I accept
+            <v-icon color="white">
+              mdi-close-thick
+            </v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -44,13 +54,18 @@
 <script>
 
 export default {
-    data: () => ({
-        dialog: false
-    }),
-
-    mounted(){
-      console.log('true');
+  data(){
+    return {
+      dialog: false,
     }
+  },
+  
+  props:{
+    data:{
+        type: Object,
+        required: true
+    },
+  },
 }
 
 </script>

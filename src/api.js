@@ -1,13 +1,27 @@
-let endpoint = 'https://data.jsdelivr.com/v1/stats/packages/year'
-endpoint  = 'https://registry.npmjs.org/-/v1/search?text='
+let endpointNPM  = 'https://registry.npmjs.org/-/v1/search?text='
+let endpointJsdelivr  = 'https://data.jsdelivr.com/v1/package/npm/'
 
-export const getSearchResult = async (packageName) => {
-    if(!packageName){
+const fetchConstructor = async (endpoint, packageTitle, params = '') => {
+    if(!packageTitle || !endpoint){
         return
     }
 
-    let response = await fetch(endpoint + packageName)
+    let url = endpoint + packageTitle +  params
+    let response = await fetch(url)
     let data = await response.json()
 
     return data
 }
+
+export const getSearchResult = async (packageName) => {
+   return fetchConstructor(endpointNPM , packageName)
+}
+
+export const getCurrentItemStat = async (packageName) => {
+   return fetchConstructor(endpointJsdelivr , packageName, '/stats')
+}
+
+export const getCurrentItemEntry = async (packageName) => {
+    return fetchConstructor(endpointJsdelivr , packageName, '/entrypoints')
+ }
+

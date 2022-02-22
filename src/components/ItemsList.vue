@@ -14,9 +14,6 @@ import Item from "@/components/Item";
 import { mapGetters } from "vuex";
 
 export default ({
-    data: () => ({
-    }),
-
     components:{
         Item
     },
@@ -24,12 +21,5 @@ export default ({
     computed:{
         ...mapGetters(["itemsList"]),
     },
-
-    methods:{
-        log(){
-        console.log(this.itemsList);
-        }
-    }
-
 })
 </script>

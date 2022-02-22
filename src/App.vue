@@ -19,8 +19,7 @@
         </v-row>
 
         <SearchInput/>
-        <ItemsList/>
-        <Dialog/>
+        <ItemsList />
       </v-container>
     </v-main>
   </v-app>
@@ -29,7 +28,6 @@
 <script>
 import SearchInput from '@/components/SearchInput';
 import ItemsList from '@/components/ItemsList';
-import Dialog from '@/components/Dialog';
 
 export default {
   name: 'App',
@@ -37,13 +35,6 @@ export default {
   components: {
     SearchInput,
     ItemsList,
-    Dialog
-  },
-
-  data() {
-    return{
-
-    }
   },
 };
 </script>

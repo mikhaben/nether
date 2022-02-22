@@ -1,40 +1,33 @@
 <template>
   <v-app>
-    <!-- <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-    hz
-    </v-app-bar> -->
-
     <v-main>
       <v-container>
         <v-row no-gutters>
           <v-col>
-            <h1 class="mb-2">
-              Holla :) 
-            </h1>
+            <h1 class="mb-2">Holla :)</h1>
           </v-col>
         </v-row>
 
-        <SearchInput/>
+        <SearchInput />
         <ItemsList />
       </v-container>
     </v-main>
+    <Footer />
   </v-app>
 </template>
 
 <script>
-import SearchInput from '@/components/SearchInput';
-import ItemsList from '@/components/ItemsList';
+import SearchInput from "@/components/SearchInput";
+import ItemsList from "@/components/ItemsList";
+import Footer from "@/components/Footer";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     SearchInput,
     ItemsList,
+    Footer,
   },
 };
 </script>

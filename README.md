@@ -1,18 +1,17 @@
 # nethernite-task
 
-## Project setup
+## Start
+
 ```
-npm install
+npm i
+npm run serve (development)
+npm run build (production)
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Requirements
 
-### Compiles and minifies for production
 ```
-npm run build
+Node v16.14
+npm 8.3
+@vue/cli 5.0.1
 ```
-
-https://dribbble.com/shots/16007029-Finance-Dashboard-Design/attachments/7846862?mode=media

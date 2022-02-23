@@ -1,27 +1,27 @@
-let endpointNPM  = 'https://registry.npmjs.org/-/v1/search?text='
-let endpointJsdelivr  = 'https://data.jsdelivr.com/v1/package/npm/'
+// Package for npm api to avoid "CORS"
+// DOC: https://www.jsdocs.io/package/query-registry
 
-const fetchConstructor = async (endpoint, packageTitle, params = '') => {
-    if(!packageTitle || !endpoint){
-        return
-    }
+let endpointJsdelivr = "https://data.jsdelivr.com/v1/package/npm/";
+let endpointJsdelivrStat = "https://data.jsdelivr.com/v1/stats/packages";
 
-    let url = endpoint + packageTitle +  params
-    let response = await fetch(url)
-    let data = await response.json()
+const fetchConstructor = async (endpoint, packageTitle, params = "") => {
+  if (!packageTitle || !endpoint) {
+    return;
+  }
 
-    return data
-}
+  let url = endpoint + packageTitle + params;
+  let response = await fetch(url);
+  let data = await response.json();
 
-export const getSearchResult = async (packageName) => {
-   return fetchConstructor(endpointNPM , packageName)
-}
+  return data;
+};
 
 export const getCurrentItemStat = async (packageName) => {
-   return fetchConstructor(endpointJsdelivr , packageName, '/stats')
-}
+  return fetchConstructor(endpointJsdelivr, packageName, "/stats");
+};
 
-export const getCurrentItemEntry = async (packageName) => {
-    return fetchConstructor(endpointJsdelivr , packageName, '/entrypoints')
- }
-
+export const getPopularItemsList = async () => {
+  let response = await fetch(endpointJsdelivrStat);
+  let data = await response.json();
+  return data;
+};

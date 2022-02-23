@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { getSearchResult } from "@/api";
+import { getPopularItemsList } from "@/api";
+import { getPackument, searchPackages } from "query-registry";
 import { mapActions } from "vuex";
 
 export default {
@@ -57,11 +58,63 @@ export default {
       }
 
       this.isLoading = true;
-      let data = await getSearchResult(this.title);
+      let data = await searchPackages({ query: { text: this.title } });
       this.updateItems(data);
       this.items = data;
       this.isLoading = false;
+
+      console.log(data);
     },
+  },
+
+  async beforeMount() {
+    let popularItems = {
+      objects: [],
+      total: "",
+    };
+
+    // get list of popular items from JSdelivr
+    let popularItemsRough = await getPopularItemsList();
+
+    // get all info about package from npm
+    // issue - some names do not match
+    await popularItemsRough.forEach(async (element) => {
+      let baseInfo;
+      try {
+        baseInfo = await getPackument({ name: element.name });
+        console.log(baseInfo);
+      } catch (err) {
+        console.error("name dont match, package dont found");
+        return;
+      }
+
+      // format to fit obj
+      let formatedInfo = {
+        package: {
+          name: baseInfo.name,
+          author: {
+            name: baseInfo.author.name,
+            email: baseInfo.author.email,
+          },
+          description: baseInfo.description,
+          version: baseInfo.distTags.latest,
+          links: {
+            homepage: baseInfo.homepage,
+            repository: baseInfo.gitRepository.url,
+          },
+        },
+      };
+      popularItems.objects.push(formatedInfo);
+
+      // get total count
+      popularItems.total = popularItems.objects.length;
+    });
+
+    // push to store
+    this.updateItems(popularItems);
+    this.items = popularItems;
+
+    console.log(popularItems);
   },
 };
 </script>

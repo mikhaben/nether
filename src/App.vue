@@ -8,8 +8,8 @@
           </v-col>
         </v-row>
 
-        <SearchInput />
-        <ItemsList />
+        <SearchInput @onSubmited="deliverTotal" />
+        <ItemsList :total="totalItems" />
       </v-container>
     </v-main>
     <Footer />
@@ -23,6 +23,18 @@ import Footer from "@/components/Footer";
 
 export default {
   name: "App",
+
+  data() {
+    return {
+      totalItems: 0,
+    };
+  },
+
+  methods: {
+    deliverTotal(total) {
+      this.totalItems = total;
+    },
+  },
 
   components: {
     SearchInput,

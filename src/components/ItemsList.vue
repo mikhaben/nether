@@ -1,17 +1,19 @@
 <template>
   <div>
     <v-list v-if="itemsList">
-      <Item v-for="item in paginatedList" :key="item.message" :item="item" />
+      <Item v-for="item in itemsList" :key="item.message" :item="item" />
     </v-list>
 
     <div class="text-center mb-3" v-if="itemsList">
-      <v-pagination
+      <v-btn
+        :loading="isLoading"
         color="black"
-        v-model="page"
-        :length="length"
-        :total-visible="pageSize"
-        @input="checkLastPage"
-      ></v-pagination>
+        class="white--text"
+        @click="paginate"
+        v-if="!isLastPage"
+        >More</v-btn
+      >
+      <div class="" v-else>the end</div>
     </div>
   </div>
 </template>
@@ -26,8 +28,10 @@ export default {
     return {
       page: 1,
       pageSize: 5,
-      threeshold: 0,
+      threeshold: 20,
       totalItems: this.total,
+      isLoading: false,
+      isLastPage: false,
     };
   },
 
@@ -58,20 +62,25 @@ export default {
   },
 
   methods: {
-    ...mapActions(["updateItems"]),
+    ...mapActions(["updateItems", "pushToItems"]),
 
-    async checkLastPage() {
-      if (this.page == this.length) {
-        this.threeshold = this.threeshold + 250;
-        if (this.threeshold < this.total) {
-          let paginatedItems = await getSearchResult("react", this.threeshold);
-          this.updateItems(paginatedItems);
-          this.page = 1;
-          console.log(this.threeshold);
-        } else {
-          console.log(this.threeshold);
-        }
+    async paginate() {
+      console.log(this.threeshold, this.total, this.itemsList);
+      if (this.threeshold < this.total) {
+        this.isLoading = true;
+        this.threeshold = this.threeshold + 20;
+        let paginatedItems = await getSearchResult("react", this.threeshold);
+        this.pushToItems(paginatedItems);
+        this.isLoading = false;
+      } else {
+        this.isLastPage = true;
       }
+    },
+  },
+
+  watch: {
+    serchUpdate() {
+      // FIXME: review this total
     },
   },
 };

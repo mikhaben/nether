@@ -11,7 +11,6 @@ const fetchConstructor = async (endpoint, packageTitle, params = "") => {
   }
 
   let url = endpoint + packageTitle + params;
-  console.log(url);
   let response = await fetch(url);
   let data = await response.json();
 
@@ -19,7 +18,7 @@ const fetchConstructor = async (endpoint, packageTitle, params = "") => {
 };
 
 export const getSearchResult = async (packageName, from) => {
-  return fetchConstructor(endpointNPM, packageName, `&size=250&from=${from}`);
+  return fetchConstructor(endpointNPM, packageName, `&size=20&from=${from}`);
 };
 
 export const getCurrentItemStat = async (packageName) => {

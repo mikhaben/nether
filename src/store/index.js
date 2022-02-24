@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -9,23 +9,31 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    mutateItems(state, items){
-      state.items = items
-    }
+    mutateItems(state, items) {
+      state.items = items;
+    },
+
+    addToItems(state, items) {
+      console.log(state.items);
+      state.items.objects = [...state.items.objects, ...items.objects];
+    },
   },
 
   actions: {
-    updateItems({commit}, items) {
+    updateItems({ commit }, items) {
       commit("mutateItems", items);
-    }
-  },
-  
-  getters: {
-    itemsList(state) {
-      return state.items.objects
-    }
+    },
+
+    pushToItems({ commit }, items) {
+      commit("addToItems", items);
+    },
   },
 
-  modules: {
-  }
-})
+  getters: {
+    itemsList(state) {
+      return state.items.objects;
+    },
+  },
+
+  modules: {},
+});
